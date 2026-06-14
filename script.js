@@ -10,11 +10,45 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// Pobieranie danych z bazy
-const db = firebase.database();
-const playerRef = db.ref('Players/Player1/Swag'); // Sprawdź czy ścieżka się zgadza!
-
-playerRef.on('value', (snapshot) => {
-    const val = snapshot.val();
-    document.getElementById('coins').innerText = val !== null ? val : 0;
+// Obserwator stanu użytkownika
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        document.getElementById('auth-container').style.display = 'none';
+        document.getElementById('game-container').style.display = 'inline-block';
+        
+        // Pobieramy dane TYLKO zalogowanego użytkownika
+        firebase.database().ref('Users/' + user.uid).on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                document.getElementById('coins').innerText = "Swag: " + data.swag;
+                document.getElementById('username').innerText = data.displayName;
+            }
+        });
+    } else {
+        document.getElementById('auth-container').style.display = 'inline-block';
+        document.getElementById('game-container').style.display = 'none';
+    }
 });
+
+function login() {
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('pass').value;
+    firebase.auth().signInWithEmailAndPassword(email, pass).catch(e => alert(e.message));
+}
+
+function register() {
+    const email = document.getElementById('email').value;
+    const pass = document.getElementById('pass').value;
+    firebase.auth().createUserWithEmailAndPassword(email, pass).then((cred) => {
+        // Inicjalizacja danych nowego użytkownika
+        firebase.database().ref('Users/' + cred.user.uid).set({
+            displayName: email.split('@')[0],
+            swag: 0,
+            level: 1
+        });
+    }).catch(e => alert(e.message));
+}
+
+function logout() {
+    firebase.auth().signOut();
+}
