@@ -5,42 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sagwa Tracker</title>
     <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a1a1a">
+    <meta name="theme-color" content="#1a1a1a">
     <style>
-        body { 
-            background: #1a1a1a; 
-            color: #000000; 
-            font-family: 'Courier New', Courier, monospace; 
-            text-align: center; 
-            padding-top: 20%; 
-        }
-        .box { 
-            border: 2px solid #333; 
-            padding: 20px; 
-            border-radius: 15px; 
-            display: inline-block; 
-            background: #222; 
-        }
-        h1 { font-size: 1.2rem; color: #fff; }
+        body { background: #1a1a1a; color: #fff; font-family: 'Courier New', Courier, monospace; text-align: center; padding-top: 10%; }
+        .box { border: 2px solid #333; padding: 20px; border-radius: 15px; display: inline-block; background: #222; }
+        h1 { font-size: 1.2rem; }
         #coins { font-size: 3rem; font-weight: bold; }
+        #login-container { margin-top: 20px; }
     </style>
 </head>
 <body>
+
+    <div class="box" id="game-status" style="display:none;">
+        <h1>SAGWA STATUS</h1>
+        <div id="coins">Loading...</div>
     </div>
-    <div class="box">
-        <h1>SAGWA STATUS - PLAYER 1</h1>
-        <div id="coins">Loading 👉🏼👈🏼...</div>
+
+    <div id="login-container" style="display:none;">
+        <h3>Panel Sagwa Tracker</h3>
+        <input type="email" id="emailField" placeholder="Email"><br>
+        <input type="password" id="passField" placeholder="Password"><br>
+        <label><input type="checkbox" onclick="togglePass()"> Show Password</label><br>
+        <button onclick="stworzKonto()">Create Account</button>
     </div>
-    <!-- Pamiętaj, żeby dodać to w sekcji <body>, tam gdzie chcesz mieć panel logowania -->
-<div id="login-container">
-  <h3>Panel Sagwa Tracker</h3>
-  <input type="email" id="emailField" placeholder="Email">
-  <input type="password" id="passField" placeholder="Password">
-  <label>
-    <input type="checkbox" onclick="togglePass()"> Show Password
-  </label>
-  <button onclick="stworzKonto()">Create Account</button>
-</div>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
