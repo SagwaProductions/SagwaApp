@@ -2,26 +2,32 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagwa App</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1a1a1a">
+    <title>Sagwa App - Auth</title>
     <style>
-        body { background: #1a1a1a; color: #fff; font-family: 'Courier New', Courier, monospace; text-align: center; padding-top: 10%; }
+        body { background: #1a1a1a; color: #fff; font-family: monospace; text-align: center; padding-top: 50px; }
         .box { border: 2px solid #333; padding: 20px; border-radius: 15px; display: inline-block; background: #222; }
-        h1 { font-size: 1.2rem; }
-        #coins { font-size: 3rem; font-weight: bold; }
+        input { margin: 5px; padding: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="box" id="game-status">
-        <h1>SAGWA STATUS</h1>
-        <div id="coins">Loading...</div>
+    <div id="auth-container" class="box">
+        <h3>Login / Register</h3>
+        <input type="email" id="email" placeholder="Email"><br>
+        <input type="password" id="pass" placeholder="Password"><br>
+        <button onclick="login()">Login</button>
+        <button onclick="register()">Create Account</button>
+    </div>
+
+    <div id="game-container" class="box" style="display:none;">
+        <h1>Welcome, <span id="username">User</span></h1>
+        <div id="coins" style="font-size: 2rem;">0</div>
+        <button onclick="logout()">Logout</button>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
