@@ -26,14 +26,25 @@
     </style>
 </head>
 <body>
+    </div>
     <div class="box">
         <h1>SAGWA STATUS - PLAYER 1</h1>
         <div id="coins">Loading 👉🏼👈🏼...</div>
     </div>
-
+    <!-- Pamiętaj, żeby dodać to w sekcji <body>, tam gdzie chcesz mieć panel logowania -->
+<div id="login-container">
+  <h3>Panel Sagwa Tracker</h3>
+  <input type="email" id="emailField" placeholder="Email">
+  <input type="password" id="passField" placeholder="Password">
+  <label>
+    <input type="checkbox" onclick="togglePass()"> Show Password
+  </label>
+  <button onclick="stworzKonto()">Create Account</button>
+</div>
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
