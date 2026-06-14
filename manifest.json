@@ -1,11 +1,11 @@
 {
   "name": "Sagwa App",
-  "short_name": "Sagwa",
+  "short_name": "Sagwa App",
   "description": "Śledzenie statystyk graczy Sagwa",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#1a1a1a",
-  "theme_color": "#00ff00",
+  "background_color": "#c0c0c0",
+  "theme_color": "#1a1a1a",
   "icons": [
     {
       "src": "icon.png",
