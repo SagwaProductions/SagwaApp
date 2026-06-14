@@ -23,3 +23,55 @@ playerRef.on('value', (snapshot) => {
     // Aktualizujemy element o id="coins" (zmieniliśmy tylko logikę, HTML zostaje)
     document.getElementById('coins').innerText = val !== null ? val : 0;
 });
+// --- ADD THIS AT THE VERY BOTTOM OF YOUR script.js FILE ---
+
+function togglePass() {
+    var x = document.getElementById("passField");
+    x.type = (x.type === "password") ? "text" : "password";
+}
+
+function stworzKonto() {
+    const email = document.getElementById("emailField").value;
+    const pass = document.getElementById("passField").value;
+
+    if (!email || !pass) {
+        alert("Please enter email and password!");
+        return;
+    }
+
+    // Create user account in Firebase Authentication
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .then((userCredential) => {
+        const uid = userCredential.user.uid;
+        
+        // Generate Unique ID: SGA + 4 random digits + 4 random letters
+        const idSGA = "SGA" + Math.floor(1000 + Math.random() * 9000) + 
+                      Array.from({length: 4}, () => String.fromCharCode(65 + Math.floor(Math.random() * 26))).join('');
+
+        // Generate Retro Username
+        const retroPrefixes = ["Retro", "Pixel", "Arcade", "Cyber", "Mega"];
+        const retroSuffixes = ["Hero", "Master", "Player", "Boss", "Sage"];
+        const username = retroPrefixes[Math.floor(Math.random()*retroPrefixes.length)] + "_" + 
+                         retroSuffixes[Math.floor(Math.random()*retroSuffixes.length)];
+
+        // Prepare user data for Realtime Database
+        const userData = {
+            displayName: username,
+            username: username,
+            uniqueID: idSGA,
+            swag: 0,
+            gold: 0,
+            level: 1,
+            createdAt: new Date().toISOString()
+        };
+
+        // Save data to Firebase Realtime Database
+        firebase.database().ref('Users/' + uid).set(userData)
+        .then(() => {
+            alert("Account created successfully! Welcome, " + username);
+        });
+    })
+    .catch((error) => {
+        alert("Error: " + error.message);
+    });
+}
